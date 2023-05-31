@@ -6,9 +6,73 @@ class MainClass
 {
     public static void Main(string[] args)
     {
+
         AddressBook Book = new AddressBook();
 
+        string Input;
 
+        string Name;
+        string PhoneNumber;
+
+        long Size;
+
+        Size = Convert.ToInt64(Console.ReadLine());
+
+        Book.SetSize(Size);
+
+        for (int i = 0; i < Size; ++i)
+        {
+
+            Console.Write("이름: ");
+            Name = Console.ReadLine();
+            Console.Write("전화번호(01012345678): ");
+            PhoneNumber = Console.ReadLine();
+
+            while (true)
+            {
+                if (Book.SetData(Name, PhoneNumber)) break;
+
+                Console.Write("재입력 전화번호(01012345678): ");
+                PhoneNumber = Console.ReadLine();
+
+            }
+
+        }
+
+        while(true)
+        {
+            Input = Console.ReadLine();
+
+            if(Input == "종료")
+            {
+                Console.WriteLine("\n종료");
+                break;
+            }
+
+            switch(Input)
+            {
+                case "InputData":
+                    break;
+
+                case "데이터입력":
+                    break;
+
+                case "DelData":
+                    break;
+
+                case "데이터삭제":
+                    break;
+
+                default:
+                    Console.WriteLine("재입력");
+                    break;
+            }
+
+        }
+
+        Book.DelData("ddd", "01033333333");
+
+        Book.AllData();
     }
 
     /*
@@ -21,12 +85,35 @@ class MainClass
 class AddressBook
 {
     private string[] NameArr;
-    private string[] AddressArr;
+    private string[] PhoneNumberArr;
     private long BookSize;
     private long Index;
 
     // int[] arr = (int[])arr2.Clone();
 
+    private void ReSize()
+    {
+        string[] CopyName = (string[])NameArr.Clone();
+        string[] CopyPhoneNumber = (string[])PhoneNumberArr.Clone();
+
+        int CheckIndx = 0;
+
+        NameArr = new string[BookSize];
+        PhoneNumberArr = new string[BookSize];
+
+        for(int i = 0; i < CopyName.Length; ++i)
+        {
+            if (CopyName[i] != null)
+            {
+                if (CopyPhoneNumber[i] != null)
+                {
+                    NameArr[CheckIndx] = CopyName[i];
+                    PhoneNumberArr[CheckIndx] = CopyPhoneNumber[i];
+                    ++CheckIndx;
+                }
+            }
+        }
+    }
 
     // 값 초기화
     public AddressBook()
@@ -40,33 +127,36 @@ class AddressBook
     {
         this.BookSize = DefaultSize;
         NameArr = new string[BookSize];
-        AddressArr = new string[BookSize];
+        PhoneNumberArr = new string[BookSize];
     }
 
     // 이름과 전번을 받아 배열에 추가
-    public void SetData(string Name, string Address) // 정보 추가
+    public bool SetData(string Name, string PhoneNumber) // 정보 추가
     {
-        if(Index >= BookSize)
+        if (PhoneNumber.Length != 11) return false; // 전화번호의 길이 확인 010####%%%%
+        else if(Index + 1 > BookSize)
         {
-            
+            ReSize();
         }
 
         this.NameArr[Index] = Name;
-        this.AddressArr[Index] = Address;
+        this.PhoneNumberArr[Index] = PhoneNumber;
         ++Index;
+        Console.WriteLine("추가 성공");
+        return true;
     }
 
     // 이름과 전번을 받아 해당하는 데이터 삭제
-    public bool DelData(string Name, string Address)
+    public bool DelData(string Name, string PhoneNumber)
     {
         for(int i = 0;i < BookSize; ++i)
         {
             if (NameArr[i] == Name)
             {
-                if (AddressArr[i] == Address)
+                if (PhoneNumberArr[i] == PhoneNumber)
                 {
-                    NameArr[i] = "-1";
-                    AddressArr[i] = "-1";
+                    NameArr[i] = null;
+                    PhoneNumberArr[i] = null;
                     --Index;
                     return true;
                 }
@@ -77,13 +167,13 @@ class AddressBook
     }
 
     // 이름과 새로운 전화번호를 받아 이름에 해당하는 전화번호를 새로운 전화번호로 변경한다.
-    public bool ModifyData(string Name, string NewAddress)
+    public bool ModifyData(string Name, string NewPhoneNumber)
     {
         for(int i = 0; i < Index; ++i)
         {
             if (NameArr[i] == Name)
             {
-                AddressArr[i] = NewAddress;
+                PhoneNumberArr[i] = NewPhoneNumber;
                 return true;
             }
         }
@@ -97,7 +187,7 @@ class AddressBook
         {
             if (NameArr[i] == Name)
             {
-                Console.WriteLine("데이터 검색\n이름: " + Name + "\t전화번호: " + AddressArr[i]);
+                Console.WriteLine("데이터 검색\n이름: " + Name + "\t전화번호: " + PhoneNumberArr[i]);
                 return true;
             }
         }
@@ -110,9 +200,10 @@ class AddressBook
         Console.WriteLine("**데이터 전체 출력**");
         for(int i = 0; i < Index; ++i)
         {
-            if (NameArr[i] != "-1")
+            if (NameArr[i] != null)
             {
-                Console.WriteLine("이름: " + NameArr[i] + "전화번호: " + AddressArr[i]);
+                Console.Write("이름: " + NameArr[i]);
+                Console.WriteLine("\t전화번호: " + PhoneNumberArr[i]);
             }
         }
         Console.WriteLine();
