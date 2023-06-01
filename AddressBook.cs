@@ -39,28 +39,88 @@ class MainClass
 
         }
 
-        while(true)
+        while (true)
         {
             Input = Console.ReadLine();
 
-            if(Input == "종료")
+            if (Input == "종료")
             {
                 Console.WriteLine("\n종료");
                 break;
             }
 
-            switch(Input)
+            switch (Input)
             {
                 case "InputData":
-                    break;
 
-                case "데이터입력":
+                    Console.Write("이름: ");
+                    Name = Console.ReadLine();
+                    Console.Write("전화번호(01012345678): ");
+                    PhoneNumber = Console.ReadLine();
+
+                    if (Book.SetData(Name, PhoneNumber))
+                    {
+                        Console.WriteLine("추가 성공");
+                    }
+                    else
+                    {
+                        Console.WriteLine("추가 실패");
+                    }
+
                     break;
 
                 case "DelData":
+
+                    Console.Write("이름: ");
+                    Name = Console.ReadLine();
+                    Console.Write("전화번호(01012345678): ");
+                    PhoneNumber = Console.ReadLine();
+
+                    if (Book.DelData(Name, PhoneNumber))
+                    {
+                        Console.WriteLine("삭제 성공");
+                    }
+                    else
+                    {
+                        Console.WriteLine("삭제 실패");
+                    }
+
                     break;
 
-                case "데이터삭제":
+                case "MotifyData":
+
+                    Console.Write("이름: ");
+                    Name = Console.ReadLine();
+                    Console.Write("새로운 전화번호(01012345678): ");
+                    PhoneNumber = Console.ReadLine();
+
+                    if (Book.ModifyData(Name, PhoneNumber))
+                    {
+                        Console.WriteLine("수정 성공");
+                    }
+                    else
+                    {
+                        Console.WriteLine("수정 실패");
+                    }
+
+                    break;
+
+                case "SearchData":
+
+                    Console.Write("이름: ");
+                    Name = Console.ReadLine();
+                    Console.Write("전화번호(01012345678): ");
+                    PhoneNumber = Console.ReadLine();
+
+                    if (Book.ModifyData(Name, PhoneNumber))
+                    {
+                        Console.WriteLine(" 성공");
+                    }
+                    else
+                    {
+                        Console.WriteLine("수정 실패");
+                    }
+
                     break;
 
                 default:
@@ -101,7 +161,7 @@ class AddressBook
         NameArr = new string[BookSize];
         PhoneNumberArr = new string[BookSize];
 
-        for(int i = 0; i < CopyName.Length; ++i)
+        for (int i = 0; i < CopyName.Length; ++i)
         {
             if (CopyName[i] != null)
             {
@@ -134,7 +194,7 @@ class AddressBook
     public bool SetData(string Name, string PhoneNumber) // 정보 추가
     {
         if (PhoneNumber.Length != 11) return false; // 전화번호의 길이 확인 010####%%%%
-        else if(Index + 1 > BookSize)
+        else if (Index + 1 > BookSize)
         {
             ReSize();
         }
@@ -142,14 +202,13 @@ class AddressBook
         this.NameArr[Index] = Name;
         this.PhoneNumberArr[Index] = PhoneNumber;
         ++Index;
-        Console.WriteLine("추가 성공");
         return true;
     }
 
     // 이름과 전번을 받아 해당하는 데이터 삭제
     public bool DelData(string Name, string PhoneNumber)
     {
-        for(int i = 0;i < BookSize; ++i)
+        for (int i = 0; i < BookSize; ++i)
         {
             if (NameArr[i] == Name)
             {
@@ -169,7 +228,7 @@ class AddressBook
     // 이름과 새로운 전화번호를 받아 이름에 해당하는 전화번호를 새로운 전화번호로 변경한다.
     public bool ModifyData(string Name, string NewPhoneNumber)
     {
-        for(int i = 0; i < Index; ++i)
+        for (int i = 0; i < Index; ++i)
         {
             if (NameArr[i] == Name)
             {
@@ -183,7 +242,7 @@ class AddressBook
     // 이름을 받아서 이름에 해당하는 데이터를 출력해줌
     public bool SearchData(string Name)
     {
-        for(int i = 0; i < Index; ++i)
+        for (int i = 0; i < Index; ++i)
         {
             if (NameArr[i] == Name)
             {
@@ -198,7 +257,7 @@ class AddressBook
     public void AllData()
     {
         Console.WriteLine("**데이터 전체 출력**");
-        for(int i = 0; i < Index; ++i)
+        for (int i = 0; i < Index; ++i)
         {
             if (NameArr[i] != null)
             {
