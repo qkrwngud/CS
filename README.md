@@ -1,14 +1,8 @@
 # CS
 
+## AddressBook.cs
 
-
-
-
-
-
-# AddressBook.cs
-
-## 변수
+#### 변수
 
     string[] NameArr; 이름 배열
     string[] PhoneNumberArr; 전화번호 배열
@@ -17,7 +11,7 @@
     string[] CopyName; 이름 배열의 복사본
     string[] CopyPhoneNumber; 전화번호 배열의 복사본
     
-## 메소드
+#### 메소드
 
     생성자
     public AddressBook()
