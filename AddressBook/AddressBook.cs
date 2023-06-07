@@ -16,7 +16,7 @@ class MainClass
 
         while (true)
         {
-            Console.Write("행동(InputData, DelData, MotifyingData, SearchData, AllData, 종료 : ");
+            Console.Write("행동(Input, Delete, Motifying, Search, AllData, 종료 : ");
             Input = Console.ReadLine();
 
             if (Input == "종료")
@@ -27,7 +27,7 @@ class MainClass
 
             switch (Input)
             {
-                case "InputData":
+                case "Input":
 
                     Console.Write("이름: ");
                     Name = Console.ReadLine();
@@ -45,7 +45,7 @@ class MainClass
                     Console.WriteLine();
                     break;
 
-                case "DelData":
+                case "Delete":
 
                     Console.Write("이름: ");
                     Name = Console.ReadLine();
@@ -63,7 +63,7 @@ class MainClass
                     Console.WriteLine();
                     break;
 
-                case "MotifyingData":
+                case "Motifying":
 
                     Console.Write("이름: ");
                     Name = Console.ReadLine();
@@ -81,7 +81,7 @@ class MainClass
                     Console.WriteLine();
                     break;
 
-                case "SearchData":
+                case "Search":
 
                     Console.Write("이름: ");
                     Name = Console.ReadLine();
