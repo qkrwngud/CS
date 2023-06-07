@@ -1,6 +1,16 @@
 # AddressBook
 2023년 프로그래밍(CS)수행평가 주소록 만들기
 
+### 입력
+```
+InputData, DelData, MotifyingData, SearchData, AllData, 종료 중 한가지를 입력하면 해당 기능을 실행한다.
+Input 추가(매개변수로 이름과 전화번호를 받아 저장함)
+Delete 삭제(매개변수로 이름과 전화번호를 받아 해당 데이터를 삭제함)
+Motifying 특정 데이터 수정(매개변수로 이름과 변경할 전화번호 입력)
+Search 특정 데이터 출력(매개변수로 이름과 전화번호를 받음)
+AllData 모든 데이터 출력(매개변수 없음)
+
+```
 
 #### 변수
 ```
