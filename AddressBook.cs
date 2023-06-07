@@ -16,7 +16,7 @@ class MainClass
 
         while (true)
         {
-            Console.Write("행동(InputData, DelData, MotiftData, SearchData, AllData) : ");
+            Console.Write("행동(InputData, DelData, MotifyingData, SearchData, AllData, 종료 : ");
             Input = Console.ReadLine();
 
             if (Input == "종료")
@@ -63,7 +63,7 @@ class MainClass
                     Console.WriteLine();
                     break;
 
-                case "MotifyData":
+                case "MotifyingData":
 
                     Console.Write("이름: ");
                     Name = Console.ReadLine();
@@ -85,10 +85,8 @@ class MainClass
 
                     Console.Write("이름: ");
                     Name = Console.ReadLine();
-                    Console.Write("전화번호(01012345678): ");
-                    PhoneNumber = Console.ReadLine();
 
-                    if (Book.ModifyingData(Name, PhoneNumber))
+                    if (Book.SearchData(Name))
                     {
                         Console.WriteLine("검색 성공");
                     }
@@ -112,12 +110,6 @@ class MainClass
 
         }
     }
-
-    /*
-        시작하면 n개의 정보 입력받기
-        
-        
-     */
 }
 
 class AddressBook
@@ -145,10 +137,12 @@ class AddressBook
         {
             case -1:
                 ++ArraySize;
+
                 NameArr = new string[ArraySize];
                 PhoneNumberArr = new string[ArraySize];
+                
 
-                for (int i = 0; i < ArraySize; ++i)
+                for (int i = 0; i < ArraySize - 1; ++i)
                 {
                     NameArr[i] = CopyName[i];
                     PhoneNumberArr[i] = CopyPhoneNumber[i];
@@ -171,6 +165,7 @@ class AddressBook
                         ++CheckIndx;
                     }
                 }
+
                 this.Index = CheckIndx - 1;
                 break;
         }
@@ -192,10 +187,7 @@ class AddressBook
     {
         if (NewPhoneNumber.Length != 11) return false; // 전화번호의 길이 확인 010####%%%%
 
-        if(Index == ArraySize)
-        {
-            ReSize(-1);
-        }
+        ReSize(-1);
 
         this.NameArr[Index] = NewName;
         this.PhoneNumberArr[Index] = NewPhoneNumber;
@@ -213,9 +205,8 @@ class AddressBook
             {
                 NameArr[i] = "-1";
                 PhoneNumberArr[i] = "-1";
-
                 ReSize(1);
-                --Index;
+
                 return true;
             }
         }
