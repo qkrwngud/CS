@@ -1,6 +1,11 @@
-// 주소록 만들기
-
 using System;
+
+/*
+ 기능 추가
+ 정 입력시 추가와 취소를 선택
+ 전화번호 시작이 010이 아니라면 다시
+ 
+ */
 
 class MainClass
 {
@@ -9,36 +14,32 @@ class MainClass
 
         AddressBook Book = new AddressBook();
 
-        string Input;
+        string InputString;
 
         string Name;
         string PhoneNumber;
 
         while (true)
         {
-            Console.Write("행동(Input, Delete, Motifying, Search, AllData, 종료 : ");
-            Input = Console.ReadLine();
+            Console.Write("행동(Input, Delete, Motify, Search, AllData, 종료 : ");
+            InputString = Console.ReadLine()!;
 
-            if (Input == "종료")
+            if (InputString == "종료")
             {
                 Console.WriteLine("\n종료");
                 break;
             }
 
-            switch (Input)
+            switch (InputString)
             {
                 case "Input":
 
                     Console.Write("이름: ");
-                    Name = Console.ReadLine();
+                    Name = Console.ReadLine()!;
                     Console.Write("전화번호(01012345678): ");
-                    PhoneNumber = Console.ReadLine();
+                    PhoneNumber = Console.ReadLine()!;
 
-                    if (Book.SetData(Name, PhoneNumber))
-                    {
-                        Console.WriteLine("추가 성공");
-                    }
-                    else
+                    if (!Book.SetData(Name, PhoneNumber))
                     {
                         Console.WriteLine("추가 실패");
                     }
@@ -48,33 +49,25 @@ class MainClass
                 case "Delete":
 
                     Console.Write("이름: ");
-                    Name = Console.ReadLine();
+                    Name = Console.ReadLine()!;
                     Console.Write("전화번호(01012345678): ");
-                    PhoneNumber = Console.ReadLine();
+                    PhoneNumber = Console.ReadLine()!;
 
-                    if (Book.DelData(Name, PhoneNumber))
-                    {
-                        Console.WriteLine("삭제 성공");
-                    }
-                    else
+                    if (!Book.DelData(Name, PhoneNumber))
                     {
                         Console.WriteLine("삭제 실패");
                     }
                     Console.WriteLine();
                     break;
 
-                case "Motifying":
+                case "Motify":
 
                     Console.Write("이름: ");
-                    Name = Console.ReadLine();
+                    Name = Console.ReadLine()!;
                     Console.Write("새로운 전화번호(01012345678): ");
-                    PhoneNumber = Console.ReadLine();
+                    PhoneNumber = Console.ReadLine()!;
 
-                    if (Book.ModifyingData(Name, PhoneNumber))
-                    {
-                        Console.WriteLine("수정 성공");
-                    }
-                    else
+                    if (!Book.ModifyingData(Name, PhoneNumber))
                     {
                         Console.WriteLine("수정 실패");
                     }
@@ -86,14 +79,11 @@ class MainClass
                     Console.Write("이름: ");
                     Name = Console.ReadLine();
 
-                    if (Book.SearchData(Name))
-                    {
-                        Console.WriteLine("검색 성공");
-                    }
-                    else
+                    if (!Book.SearchData(Name))
                     {
                         Console.WriteLine("검색 실패");
                     }
+                    
                     Console.WriteLine();
                     break;
 
@@ -121,7 +111,18 @@ class AddressBook
     private string[] CopyName;
     private string[] CopyPhoneNumber;
 
-    private void ReSize(int DelIndex = -1)
+    private string ZOZ;
+
+    private string InputName;
+    private string InputPhoneNumber;
+
+    private void InputInfo()
+    {
+        InputName = Console.ReadLine()!;
+        InputPhoneNumber = Console.ReadLine()!;
+    }
+
+    private void ReSize()
     {
 
         CopyName = new string[ArraySize];
@@ -133,41 +134,22 @@ class AddressBook
             CopyPhoneNumber[i] = PhoneNumberArr[i];
         }
 
-        switch (DelIndex)
+        ++ArraySize;
+
+        int CheckIndex = 0;
+
+        NameArr = new string[ArraySize];
+        PhoneNumberArr = new string[ArraySize];
+
+
+        for (int i = 0; i < ArraySize; ++i)
         {
-            case -1:
-                ++ArraySize;
-
-                NameArr = new string[ArraySize];
-                PhoneNumberArr = new string[ArraySize];
-                
-
-                for (int i = 0; i < ArraySize - 1; ++i)
-                {
-                    NameArr[i] = CopyName[i];
-                    PhoneNumberArr[i] = CopyPhoneNumber[i];
-                }
-
-                break;
-
-            case 1:
-                int CheckIndx = 0;
-
-                NameArr = new string[ArraySize];
-                PhoneNumberArr = new string[ArraySize];
-
-                for (int i = 0; i < ArraySize; ++i)
-                {
-                    if (CopyName[i] != "-1" && CopyPhoneNumber[i] != "-1")
-                    {
-                        NameArr[CheckIndx] = CopyName[i];
-                        PhoneNumberArr[CheckIndx] = CopyPhoneNumber[i];
-                        ++CheckIndx;
-                    }
-                }
-
-                this.Index = CheckIndx - 1;
-                break;
+            if (CopyName[i] != "-1" && CopyPhoneNumber[i] != "-1")
+            {
+                NameArr[CheckIndex] = CopyName[i];
+                PhoneNumberArr[CheckIndex] = CopyPhoneNumber[i];
+                ++CheckIndex;
+            }
         }
     }
 
@@ -180,12 +162,21 @@ class AddressBook
 
         NameArr = new string[ArraySize];
         PhoneNumberArr = new string[ArraySize];
+
+        ZOZ = "010";
     }
 
     // 이름과 전번을 받아 배열에 추가
     public bool SetData(string NewName, string NewPhoneNumber) // 정보 추가
     {
+
         if (NewPhoneNumber.Length != 11) return false; // 전화번호의 길이 확인 010####%%%%
+
+        for(int i = 0; i < 3; ++i)
+        {
+            if (NewPhoneNumber[i] == ZOZ[i]) continue;
+            return false;
+        }
 
         ReSize(-1);
 
