@@ -1,5 +1,100 @@
 using System;
 
+class MainClass
+{
+    public static void Main(string[] args)
+    {
+
+        AddressBook Book = new AddressBook();
+
+        string InputString;
+
+        string Name;
+        string PhoneNumber;
+
+        while (true)
+        {
+            Console.Write("행동(Input, Delete, Motify, Search, AllData, 종료 : ");
+            InputString = Console.ReadLine()!;
+
+            if (InputString == "종료")
+            {
+                Console.WriteLine("\n종료");
+                break;
+            }
+
+            switch (InputString)
+            {
+                case "Input":
+
+                    Console.Write("이름: ");
+                    Name = Console.ReadLine()!;
+                    Console.Write("전화번호(01012345678): ");
+                    PhoneNumber = Console.ReadLine()!;
+
+                    if (!Book.SetData(Name, PhoneNumber))
+                    {
+                        Console.WriteLine("추가 실패");
+                    }
+                    Console.WriteLine();
+                    break;
+
+                case "Delete":
+
+                    Console.Write("이름: ");
+                    Name = Console.ReadLine()!;
+                    Console.Write("전화번호(01012345678): ");
+                    PhoneNumber = Console.ReadLine()!;
+
+                    if (!Book.DelData(Name, PhoneNumber))
+                    {
+                        Console.WriteLine("삭제 실패");
+                    }
+                    Console.WriteLine();
+                    break;
+
+                case "Motify":
+
+                    Console.Write("이름: ");
+                    Name = Console.ReadLine()!;
+                    Console.Write("새로운 전화번호(01012345678): ");
+                    PhoneNumber = Console.ReadLine()!;
+
+                    if (!Book.ModifyingData(Name, PhoneNumber))
+                    {
+                        Console.WriteLine("수정 실패");
+                    }
+                    Console.WriteLine();
+                    break;
+
+                case "Search":
+
+                    Console.Write("이름: ");
+                    Name = Console.ReadLine();
+
+                    if (!Book.SearchData(Name))
+                    {
+                        Console.WriteLine("검색 실패");
+                    }
+                    
+                    Console.WriteLine();
+                    break;
+
+                case "AllData":
+
+                    Book.ShowAllData();
+                    Console.WriteLine();
+                    break;
+
+                default:
+                    Console.WriteLine("재입력");
+                    break;
+            }
+
+        }
+    }
+}
+
 class AddressBook
 {
     private string[] NameArr;
@@ -156,99 +251,4 @@ class AddressBook
         Console.WriteLine();
     }
 
-}
-
-class MainClass
-{
-    public static void Main(string[] args)
-    {
-
-        AddressBook Book = new AddressBook();
-
-        string InputString;
-
-        string Name;
-        string PhoneNumber;
-
-        while (true)
-        {
-            Console.Write("행동(Input, Delete, Motify, Search, AllData, 종료 : ");
-            InputString = Console.ReadLine()!;
-
-            if (InputString == "종료")
-            {
-                Console.WriteLine("\n종료");
-                break;
-            }
-
-            switch (InputString)
-            {
-                case "Input":
-
-                    Console.Write("이름: ");
-                    Name = Console.ReadLine()!;
-                    Console.Write("전화번호(01012345678): ");
-                    PhoneNumber = Console.ReadLine()!;
-
-                    if (!Book.SetData(Name, PhoneNumber))
-                    {
-                        Console.WriteLine("추가 실패");
-                    }
-                    Console.WriteLine();
-                    break;
-
-                case "Delete":
-
-                    Console.Write("이름: ");
-                    Name = Console.ReadLine()!;
-                    Console.Write("전화번호(01012345678): ");
-                    PhoneNumber = Console.ReadLine()!;
-
-                    if (!Book.DelData(Name, PhoneNumber))
-                    {
-                        Console.WriteLine("삭제 실패");
-                    }
-                    Console.WriteLine();
-                    break;
-
-                case "Motify":
-
-                    Console.Write("이름: ");
-                    Name = Console.ReadLine()!;
-                    Console.Write("새로운 전화번호(01012345678): ");
-                    PhoneNumber = Console.ReadLine()!;
-
-                    if (!Book.ModifyingData(Name, PhoneNumber))
-                    {
-                        Console.WriteLine("수정 실패");
-                    }
-                    Console.WriteLine();
-                    break;
-
-                case "Search":
-
-                    Console.Write("이름: ");
-                    Name = Console.ReadLine();
-
-                    if (!Book.SearchData(Name))
-                    {
-                        Console.WriteLine("검색 실패");
-                    }
-                    
-                    Console.WriteLine();
-                    break;
-
-                case "AllData":
-
-                    Book.ShowAllData();
-                    Console.WriteLine();
-                    break;
-
-                default:
-                    Console.WriteLine("재입력");
-                    break;
-            }
-
-        }
-    }
 }
